@@ -5,8 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Hello world!
- *
+ * Created by Guozhen Cheng on 2017/6/11.
  */
 public class Main
 {

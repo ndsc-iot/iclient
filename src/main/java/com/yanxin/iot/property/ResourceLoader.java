@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Created by Administrator on 2017/6/11.
+ * Created by Guozhen Cheng on 2017/6/11.
  */
 public class ResourceLoader {
     private static ResourceLoader loader = new ResourceLoader();

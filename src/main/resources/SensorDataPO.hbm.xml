@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.yanxin.iot.mariadb.beans.SensorDataPO" table="sensor_data" schema="iotdb">
+        <id name="id" column="id"/>
+        <property name="data" column="data"/>
+        <many-to-one name="sensorBySensorId" class="com.yanxin.iot.mariadb.beans.SensorPO">
+            <column name="sensor_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

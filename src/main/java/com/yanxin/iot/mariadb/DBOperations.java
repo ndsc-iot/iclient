@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 
 /**
- * Created by Administrator on 2017/6/11.
+ * Created by Guozhen Cheng on 2017/6/11.
  */
 public final class DBOperations {
 

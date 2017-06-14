@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2017/6/11.
+ * Created by Guozhen Cheng on 2017/6/11.
  */
 public class MariaDbPool {
 

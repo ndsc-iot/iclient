@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Created by Administrator on 2017/6/11.
+ * Created by Guozhen Cheng on 2017/6/11.
  */
 public class PropertiesUtil {
 

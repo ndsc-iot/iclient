@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.yanxin.iot.mariadb.beans.SensorPO" table="sensor" schema="iotdb">
+        <id name="id" column="id"/>
+        <property name="typeId" column="type_id"/>
+        <property name="createdTime" column="created_time"/>
+        <property name="roomId" column="room_id"/>
+        <many-to-one name="roomByRoomId" class="com.yanxin.iot.mariadb.beans.RoomPO">
+            <column name="room_id"/>
+        </many-to-one>
+        <many-to-one name="sensorTypeByTypeId" class="com.yanxin.iot.mariadb.beans.SensorTypePO">
+            <column name="type_id"/>
+        </many-to-one>
+        <set name="sensorDataById" inverse="true">
+            <key>
+                <column name="sensor_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.yanxin.iot.mariadb.beans.SensorDataPO"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,7 +1,6 @@
 package com.yanxin.iot.mariadb;
 
 import com.yanxin.iot.Utils.HibernateUtil;
-import com.yanxin.iot.mariadb.beans.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/6/11.
+ * Created by Guozhen Cheng on 2017/6/11.
  */
 public class UserCRUD {
 
@@ -21,7 +20,7 @@ public class UserCRUD {
     public UserCRUD() {
     }
 
-    public static void setUser(User user){
+    /*public static void setUser(User user){
         session.beginTransaction();
         if(null != user){
             session.save(user);
@@ -29,16 +28,16 @@ public class UserCRUD {
         }
     }
 
-    public static final List<User> getUserList(){
+    public static final List getUserList(){
         String hql = "FROM User";
         session.beginTransaction();
         Query query = session.createQuery(hql);
-        List<User> results = query.list();
+        List results = query.list();
 
         return results;
     }
 
-    public static final List<User> getUserByName(String username){
+    public static final List getUserByName(String username){
         String hql = "FROM User AS U WHERE U.username = "+ username;
         session.beginTransaction();
         Query query = session.createQuery(hql);
@@ -46,7 +45,7 @@ public class UserCRUD {
 
         return results;
 
-    }
+    }*/
 
     // test code
 /*    public static void main(String[] args) {

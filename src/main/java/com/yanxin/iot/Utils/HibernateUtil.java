@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by Administrator on 2017/6/11.
+ * Created by Guozhen Cheng on 2017/6/11.
  */
 public class HibernateUtil {
 
@@ -33,6 +33,5 @@ public class HibernateUtil {
         // Close caches and connection pools
         getSessionFactory().close();
     }
-
 
 }
