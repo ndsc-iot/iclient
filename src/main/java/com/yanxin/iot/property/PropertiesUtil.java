@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class PropertiesUtil {
 
-    private static Logger log = LoggerFactory.getLogger(PropertiesUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(PropertiesUtil.class);
 
     private static ResourceLoader loader = ResourceLoader.getInstance();
     private static ConcurrentMap<String, String> configMap = new ConcurrentHashMap<String, String>();

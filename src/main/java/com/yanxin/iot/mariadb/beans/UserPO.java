@@ -1,107 +1,85 @@
 package com.yanxin.iot.mariadb.beans;
 
-import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
- * Created by Guozhen Cheng on 2017/6/14.
+ * UserPO entity. @author MyEclipse Persistence Tools
  */
-@Entity
-@Table(name = "user", schema = "iotdb") //, catalog = "")
-public class UserPO {
-    private Integer userId;
-    private Date lastLogin;
-    private Integer actor;
-    private String username;
-    private String password;
-    private Timestamp createdTime;
 
-    @Id
-    @Column(name = "user_id")
-    public Integer getUserId() {
-        return userId;
-    }
+public class UserPO implements java.io.Serializable {
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	// Fields
 
-    @Basic
-    @Column(name = "last_login")
-    public Date getLastLogin() {
-        return lastLogin;
-    }
+	private Integer userId;
+	private Date lastLogin;
+	private Integer actor;
+	private String username;
+	private String password;
+	private Date createdTime;
 
-    public void setLastLogin(Date lastLogin) {
-        this.lastLogin = lastLogin;
-    }
+	// Constructors
 
-    @Basic
-    @Column(name = "actor")
-    public Integer getActor() {
-        return actor;
-    }
+	/** default constructor */
+	public UserPO() {
+	}
 
-    public void setActor(Integer actor) {
-        this.actor = actor;
-    }
+	/** full constructor */
+	public UserPO(Date lastLogin, Integer actor, String username, String password, Date createdTime) {
+		this.lastLogin = lastLogin;
+		this.actor = actor;
+		this.username = username;
+		this.password = password;
+		this.createdTime = createdTime;
+	}
 
-    @Basic
-    @Column(name = "username")
-    public String getUsername() {
-        return username;
-    }
+	// Property accessors
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public Integer getUserId() {
+		return this.userId;
+	}
 
-    @Basic
-    @Column(name = "password")
-    public String getPassword() {
-        return password;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public Date getLastLogin() {
+		return this.lastLogin;
+	}
 
-    @Basic
-    @Column(name = "created_time")
-    public Timestamp getCreatedTime() {
-        return createdTime;
-    }
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
 
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
-    }
+	public Integer getActor() {
+		return this.actor;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public void setActor(Integer actor) {
+		this.actor = actor;
+	}
 
-        UserPO userPO = (UserPO) o;
+	public String getUsername() {
+		return this.username;
+	}
 
-        if (userId != null ? !userId.equals(userPO.userId) : userPO.userId != null) return false;
-        if (lastLogin != null ? !lastLogin.equals(userPO.lastLogin) : userPO.lastLogin != null) return false;
-        if (actor != null ? !actor.equals(userPO.actor) : userPO.actor != null) return false;
-        if (username != null ? !username.equals(userPO.username) : userPO.username != null) return false;
-        if (password != null ? !password.equals(userPO.password) : userPO.password != null) return false;
-        if (createdTime != null ? !createdTime.equals(userPO.createdTime) : userPO.createdTime != null) return false;
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-        return true;
-    }
+	public String getPassword() {
+		return this.password;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + (lastLogin != null ? lastLogin.hashCode() : 0);
-        result = 31 * result + (actor != null ? actor.hashCode() : 0);
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
-        return result;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Date getCreatedTime() {
+		return this.createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
 }

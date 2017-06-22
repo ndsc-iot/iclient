@@ -1,102 +1,77 @@
 package com.yanxin.iot.mariadb.beans;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Created by Guozhen Cheng on 2017/6/14.
+ * SiteareaPO entity. @author MyEclipse Persistence Tools
  */
-@Entity
-@Table(name = "sitearea", schema = "iotdb") //, catalog = "")
-public class SiteareaPO {
-    private Integer id;
-    private Integer name;
-    private Integer regionId;
-    private Timestamp createdTime;
-    private Collection<RoomPO> roomsById;
-    private RegionPO regionByRegionId;
 
-    @Id
-    @Column(name = "id")
-    public Integer getId() {
-        return id;
-    }
+public class SiteareaPO implements java.io.Serializable {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	// Fields
 
-    @Basic
-    @Column(name = "name")
-    public Integer getName() {
-        return name;
-    }
+	private Integer id;
+	private RegionPO regionPO;
+	private String name;
+	private Date createdTime;
+	private Set roomPOs = new HashSet(0);
 
-    public void setName(Integer name) {
-        this.name = name;
-    }
+	// Constructors
 
-    @Basic
-    @Column(name = "region_id")
-    public Integer getRegionId() {
-        return regionId;
-    }
+	/** default constructor */
+	public SiteareaPO() {
+	}
 
-    public void setRegionId(Integer regionId) {
-        this.regionId = regionId;
-    }
+	/** full constructor */
+	public SiteareaPO(RegionPO regionPO, String name, Date createdTime, Set roomPOs) {
+		this.regionPO = regionPO;
+		this.name = name;
+		this.createdTime = createdTime;
+		this.roomPOs = roomPOs;
+	}
 
-    @Basic
-    @Column(name = "created_time")
-    public Timestamp getCreatedTime() {
-        return createdTime;
-    }
+	// Property accessors
 
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
-    }
+	public Integer getId() {
+		return this.id;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-        SiteareaPO that = (SiteareaPO) o;
+	public RegionPO getRegionPO() {
+		return this.regionPO;
+	}
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (regionId != null ? !regionId.equals(that.regionId) : that.regionId != null) return false;
-        if (createdTime != null ? !createdTime.equals(that.createdTime) : that.createdTime != null) return false;
+	public void setRegionPO(RegionPO regionPO) {
+		this.regionPO = regionPO;
+	}
 
-        return true;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (regionId != null ? regionId.hashCode() : 0);
-        result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
-        return result;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @OneToMany(mappedBy = "siteareaBySiteId")
-    public Collection<RoomPO> getRoomsById() {
-        return roomsById;
-    }
+	public Date getCreatedTime() {
+		return this.createdTime;
+	}
 
-    public void setRoomsById(Collection<RoomPO> roomsById) {
-        this.roomsById = roomsById;
-    }
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "region_id", referencedColumnName = "id", nullable = false)
-    public RegionPO getRegionByRegionId() {
-        return regionByRegionId;
-    }
+	public Set getRoomPOs() {
+		return this.roomPOs;
+	}
 
-    public void setRegionByRegionId(RegionPO regionByRegionId) {
-        this.regionByRegionId = regionByRegionId;
-    }
+	public void setRoomPOs(Set roomPOs) {
+		this.roomPOs = roomPOs;
+	}
+
 }

@@ -1,65 +1,58 @@
 package com.yanxin.iot.mariadb.beans;
 
-import javax.persistence.*;
-import java.util.Arrays;
-
 /**
- * Created by Guozhen Cheng on 2017/6/14.
+ * SensorDataPO entity. @author MyEclipse Persistence Tools
  */
-@Entity
-@Table(name = "sensor_data", schema = "iotdb") //, catalog = "")
-public class SensorDataPO {
-    private Integer id;
-    private byte[] data;
-    private SensorPO sensorBySensorId;
 
-    @Id
-    @Column(name = "id")
-    public Integer getId() {
-        return id;
-    }
+public class SensorDataPO implements java.io.Serializable {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	// Fields
 
-    @Basic
-    @Column(name = "data")
-    public byte[] getData() {
-        return data;
-    }
+	private Integer id;
+	private SensorPO sensorPO;
+	private byte[] data;
 
-    public void setData(byte[] data) {
-        this.data = data;
-    }
+	// Constructors
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	/** default constructor */
+	public SensorDataPO() {
+	}
 
-        SensorDataPO that = (SensorDataPO) o;
+	/** minimal constructor */
+	public SensorDataPO(SensorPO sensorPO) {
+		this.sensorPO = sensorPO;
+	}
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (!Arrays.equals(data, that.data)) return false;
+	/** full constructor */
+	public SensorDataPO(SensorPO sensorPO, byte[] data) {
+		this.sensorPO = sensorPO;
+		this.data = data;
+	}
 
-        return true;
-    }
+	// Property accessors
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + Arrays.hashCode(data);
-        return result;
-    }
+	public Integer getId() {
+		return this.id;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "sensor_id", referencedColumnName = "id", nullable = false)
-    public SensorPO getSensorBySensorId() {
-        return sensorBySensorId;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setSensorBySensorId(SensorPO sensorBySensorId) {
-        this.sensorBySensorId = sensorBySensorId;
-    }
+	public SensorPO getSensorPO() {
+		return this.sensorPO;
+	}
+
+	public void setSensorPO(SensorPO sensorPO) {
+		this.sensorPO = sensorPO;
+	}
+
+	public byte[] getData() {
+		return this.data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table name="region" catalog="iotdb"
+		class="com.yanxin.iot.mariadb.beans.RegionPO">
+		<primary-key>
+			<generator class="increment"></generator>
+		</primary-key>
+	</table>
+	<table name="room" catalog="iotdb"
+		class="com.yanxin.iot.mariadb.beans.RoomPO">
+		<primary-key>
+			<generator class="increment"></generator>
+		</primary-key>
+	</table>
+	<table name="sensor_data" catalog="iotdb"
+		class="com.yanxin.iot.mariadb.beans.SensorDataPO">
+		<primary-key>
+			<generator class="increment"></generator>
+		</primary-key>
+	</table>
+	<table name="sensor_type" catalog="iotdb"
+		class="com.yanxin.iot.mariadb.beans.SensorTypePO">
+		<primary-key>
+			<generator class="increment"></generator>
+		</primary-key>
+	</table>
+	<table name="sensor" catalog="iotdb"
+		class="com.yanxin.iot.mariadb.beans.SensorPO">
+	</table>
+	<table name="sitearea" catalog="iotdb"
+		class="com.yanxin.iot.mariadb.beans.SiteareaPO">
+		<primary-key>
+			<generator class="increment"></generator>
+		</primary-key>
+	</table>
+<table name="user" catalog="iotdb"
+	class="com.yanxin.iot.mariadb.beans.UserPO">
+	<primary-key>
+		<generator class="increment"></generator>
+	</primary-key>
+</table>
+</hibernate-reverse-engineering>

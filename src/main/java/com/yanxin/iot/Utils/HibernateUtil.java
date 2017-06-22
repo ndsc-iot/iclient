@@ -1,9 +1,14 @@
 package com.yanxin.iot.Utils;
 
+import com.yanxin.iot.mariadb.beans.UserPO;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Created by Guozhen Cheng on 2017/6/11.
@@ -33,5 +38,14 @@ public class HibernateUtil {
         // Close caches and connection pools
         getSessionFactory().close();
     }
+    /*
+    public static void main(String[] args) {
 
+        Session session = sessionFactory.openSession();
+
+        Transaction tx = session.beginTransaction();
+        List<UserPO> users = session.createQuery("select u from UserPO u").list();
+        tx.commit();
+        log.info("--------------------------------");
+    }*/
 }

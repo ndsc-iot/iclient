@@ -1,79 +1,67 @@
 package com.yanxin.iot.mariadb.beans;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Created by Guozhen Cheng on 2017/6/14.
+ * RegionPO entity. @author MyEclipse Persistence Tools
  */
-@Entity
-@Table(name = "region", schema = "iotdb") //, catalog = "")
-public class RegionPO {
-    private Integer id;
-    private String name;
-    private Timestamp createdTime;
-    private Collection<SiteareaPO> siteareasById;
 
-    @Id
-    @Column(name = "id")
-    public Integer getId() {
-        return id;
-    }
+public class RegionPO implements java.io.Serializable {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	// Fields
 
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
+	private Integer id;
+	private String name;
+	private Date createdTime;
+	private Set siteareaPOs = new HashSet(0);
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	// Constructors
 
-    @Basic
-    @Column(name = "created_time")
-    public Timestamp getCreatedTime() {
-        return createdTime;
-    }
+	/** default constructor */
+	public RegionPO() {
+	}
 
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
-    }
+	/** full constructor */
+	public RegionPO(String name, Date createdTime, Set siteareaPOs) {
+		this.name = name;
+		this.createdTime = createdTime;
+		this.siteareaPOs = siteareaPOs;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	// Property accessors
 
-        RegionPO regionPO = (RegionPO) o;
+	public Integer getId() {
+		return this.id;
+	}
 
-        if (id != null ? !id.equals(regionPO.id) : regionPO.id != null) return false;
-        if (name != null ? !name.equals(regionPO.name) : regionPO.name != null) return false;
-        if (createdTime != null ? !createdTime.equals(regionPO.createdTime) : regionPO.createdTime != null)
-            return false;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-        return true;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
-        return result;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @OneToMany(mappedBy = "regionByRegionId")
-    public Collection<SiteareaPO> getSiteareasById() {
-        return siteareasById;
-    }
+	public Date getCreatedTime() {
+		return this.createdTime;
+	}
 
-    public void setSiteareasById(Collection<SiteareaPO> siteareasById) {
-        this.siteareasById = siteareasById;
-    }
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Set getSiteareaPOs() {
+		return this.siteareaPOs;
+	}
+
+	public void setSiteareaPOs(Set siteareaPOs) {
+		this.siteareaPOs = siteareaPOs;
+	}
+
 }

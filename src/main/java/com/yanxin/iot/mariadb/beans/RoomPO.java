@@ -1,102 +1,82 @@
 package com.yanxin.iot.mariadb.beans;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Created by Guozhen Cheng on 2017/6/14.
+ * RoomPO entity. @author MyEclipse Persistence Tools
  */
-@Entity
-@Table(name = "room", schema = "iotdb") //, catalog = "")
-public class RoomPO {
-    private Integer id;
-    private String name;
-    private Integer siteId;
-    private Timestamp createdTime;
-    private SiteareaPO siteareaBySiteId;
-    private Collection<SensorPO> sensorsById;
 
-    @Id
-    @Column(name = "id")
-    public Integer getId() {
-        return id;
-    }
+public class RoomPO implements java.io.Serializable {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	// Fields
 
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
+	private Integer id;
+	private SiteareaPO siteareaPO;
+	private String name;
+	private Date createdTime;
+	private Set sensorPOs = new HashSet(0);
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	// Constructors
 
-    @Basic
-    @Column(name = "site_id")
-    public Integer getSiteId() {
-        return siteId;
-    }
+	/** default constructor */
+	public RoomPO() {
+	}
 
-    public void setSiteId(Integer siteId) {
-        this.siteId = siteId;
-    }
+	/** minimal constructor */
+	public RoomPO(SiteareaPO siteareaPO) {
+		this.siteareaPO = siteareaPO;
+	}
 
-    @Basic
-    @Column(name = "created_time")
-    public Timestamp getCreatedTime() {
-        return createdTime;
-    }
+	/** full constructor */
+	public RoomPO(SiteareaPO siteareaPO, String name, Date createdTime, Set sensorPOs) {
+		this.siteareaPO = siteareaPO;
+		this.name = name;
+		this.createdTime = createdTime;
+		this.sensorPOs = sensorPOs;
+	}
 
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
-    }
+	// Property accessors
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public Integer getId() {
+		return this.id;
+	}
 
-        RoomPO roomPO = (RoomPO) o;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-        if (id != null ? !id.equals(roomPO.id) : roomPO.id != null) return false;
-        if (name != null ? !name.equals(roomPO.name) : roomPO.name != null) return false;
-        if (siteId != null ? !siteId.equals(roomPO.siteId) : roomPO.siteId != null) return false;
-        if (createdTime != null ? !createdTime.equals(roomPO.createdTime) : roomPO.createdTime != null) return false;
+	public SiteareaPO getSiteareaPO() {
+		return this.siteareaPO;
+	}
 
-        return true;
-    }
+	public void setSiteareaPO(SiteareaPO siteareaPO) {
+		this.siteareaPO = siteareaPO;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (siteId != null ? siteId.hashCode() : 0);
-        result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
-        return result;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "site_id", referencedColumnName = "id")
-    public SiteareaPO getSiteareaBySiteId() {
-        return siteareaBySiteId;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setSiteareaBySiteId(SiteareaPO siteareaBySiteId) {
-        this.siteareaBySiteId = siteareaBySiteId;
-    }
+	public Date getCreatedTime() {
+		return this.createdTime;
+	}
 
-    @OneToMany(mappedBy = "roomByRoomId")
-    public Collection<SensorPO> getSensorsById() {
-        return sensorsById;
-    }
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
 
-    public void setSensorsById(Collection<SensorPO> sensorsById) {
-        this.sensorsById = sensorsById;
-    }
+	public Set getSensorPOs() {
+		return this.sensorPOs;
+	}
+
+	public void setSensorPOs(Set sensorPOs) {
+		this.sensorPOs = sensorPOs;
+	}
+
 }

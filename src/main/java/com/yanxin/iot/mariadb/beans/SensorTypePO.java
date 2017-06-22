@@ -1,78 +1,67 @@
 package com.yanxin.iot.mariadb.beans;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Created by Guozhen Cheng on 2017/6/14.
+ * SensorTypePO entity. @author MyEclipse Persistence Tools
  */
-@Entity
-@Table(name = "sensor_type", schema = "iotdb") //, catalog = "")
-public class SensorTypePO {
-    private Integer id;
-    private String type;
-    private Timestamp createdTime;
-    private Collection<SensorPO> sensorsById;
 
-    @Id
-    @Column(name = "id")
-    public Integer getId() {
-        return id;
-    }
+public class SensorTypePO implements java.io.Serializable {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	// Fields
 
-    @Basic
-    @Column(name = "type")
-    public String getType() {
-        return type;
-    }
+	private Integer id;
+	private String type;
+	private Date createdTime;
+	private Set sensorPOs = new HashSet(0);
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	// Constructors
 
-    @Basic
-    @Column(name = "created_time")
-    public Timestamp getCreatedTime() {
-        return createdTime;
-    }
+	/** default constructor */
+	public SensorTypePO() {
+	}
 
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
-    }
+	/** full constructor */
+	public SensorTypePO(String type, Date createdTime, Set sensorPOs) {
+		this.type = type;
+		this.createdTime = createdTime;
+		this.sensorPOs = sensorPOs;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	// Property accessors
 
-        SensorTypePO that = (SensorTypePO) o;
+	public Integer getId() {
+		return this.id;
+	}
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
-        if (createdTime != null ? !createdTime.equals(that.createdTime) : that.createdTime != null) return false;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-        return true;
-    }
+	public String getType() {
+		return this.type;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
-        return result;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    @OneToMany(mappedBy = "sensorTypeByTypeId")
-    public Collection<SensorPO> getSensorsById() {
-        return sensorsById;
-    }
+	public Date getCreatedTime() {
+		return this.createdTime;
+	}
 
-    public void setSensorsById(Collection<SensorPO> sensorsById) {
-        this.sensorsById = sensorsById;
-    }
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Set getSensorPOs() {
+		return this.sensorPOs;
+	}
+
+	public void setSensorPOs(Set sensorPOs) {
+		this.sensorPOs = sensorPOs;
+	}
+
 }

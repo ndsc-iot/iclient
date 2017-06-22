@@ -1,114 +1,85 @@
 package com.yanxin.iot.mariadb.beans;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Created by Guozhen Cheng on 2017/6/14.
+ * SensorPO entity. @author MyEclipse Persistence Tools
  */
-@Entity
-@Table(name = "sensor", schema = "iotdb") //, catalog = "")
-public class SensorPO {
-    private String id;
-    private Integer typeId;
-    private Timestamp createdTime;
-    private Integer roomId;
-    private RoomPO roomByRoomId;
-    private SensorTypePO sensorTypeByTypeId;
-    private Collection<SensorDataPO> sensorDataById;
 
-    @Id
-    @Column(name = "id")
-    public String getId() {
-        return id;
-    }
+public class SensorPO implements java.io.Serializable {
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	// Fields
 
-    @Basic
-    @Column(name = "type_id")
-    public Integer getTypeId() {
-        return typeId;
-    }
+	private String id;
+	private RoomPO roomPO;
+	private SensorTypePO sensorTypePO;
+	private Date createdTime;
+	private Set sensorDataPOs = new HashSet(0);
 
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
-    }
+	// Constructors
 
-    @Basic
-    @Column(name = "created_time")
-    public Timestamp getCreatedTime() {
-        return createdTime;
-    }
+	/** default constructor */
+	public SensorPO() {
+	}
 
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
-    }
+	/** minimal constructor */
+	public SensorPO(String id, RoomPO roomPO, SensorTypePO sensorTypePO) {
+		this.id = id;
+		this.roomPO = roomPO;
+		this.sensorTypePO = sensorTypePO;
+	}
 
-    @Basic
-    @Column(name = "room_id")
-    public Integer getRoomId() {
-        return roomId;
-    }
+	/** full constructor */
+	public SensorPO(String id, RoomPO roomPO, SensorTypePO sensorTypePO, Date createdTime, Set sensorDataPOs) {
+		this.id = id;
+		this.roomPO = roomPO;
+		this.sensorTypePO = sensorTypePO;
+		this.createdTime = createdTime;
+		this.sensorDataPOs = sensorDataPOs;
+	}
 
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
-    }
+	// Property accessors
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public String getId() {
+		return this.id;
+	}
 
-        SensorPO sensorPO = (SensorPO) o;
+	public void setId(String id) {
+		this.id = id;
+	}
 
-        if (id != null ? !id.equals(sensorPO.id) : sensorPO.id != null) return false;
-        if (typeId != null ? !typeId.equals(sensorPO.typeId) : sensorPO.typeId != null) return false;
-        if (createdTime != null ? !createdTime.equals(sensorPO.createdTime) : sensorPO.createdTime != null)
-            return false;
-        if (roomId != null ? !roomId.equals(sensorPO.roomId) : sensorPO.roomId != null) return false;
+	public RoomPO getRoomPO() {
+		return this.roomPO;
+	}
 
-        return true;
-    }
+	public void setRoomPO(RoomPO roomPO) {
+		this.roomPO = roomPO;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
-        result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
-        result = 31 * result + (roomId != null ? roomId.hashCode() : 0);
-        return result;
-    }
+	public SensorTypePO getSensorTypePO() {
+		return this.sensorTypePO;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
-    public RoomPO getRoomByRoomId() {
-        return roomByRoomId;
-    }
+	public void setSensorTypePO(SensorTypePO sensorTypePO) {
+		this.sensorTypePO = sensorTypePO;
+	}
 
-    public void setRoomByRoomId(RoomPO roomByRoomId) {
-        this.roomByRoomId = roomByRoomId;
-    }
+	public Date getCreatedTime() {
+		return this.createdTime;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
-    public SensorTypePO getSensorTypeByTypeId() {
-        return sensorTypeByTypeId;
-    }
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
 
-    public void setSensorTypeByTypeId(SensorTypePO sensorTypeByTypeId) {
-        this.sensorTypeByTypeId = sensorTypeByTypeId;
-    }
+	public Set getSensorDataPOs() {
+		return this.sensorDataPOs;
+	}
 
-    @OneToMany(mappedBy = "sensorBySensorId")
-    public Collection<SensorDataPO> getSensorDataById() {
-        return sensorDataById;
-    }
+	public void setSensorDataPOs(Set sensorDataPOs) {
+		this.sensorDataPOs = sensorDataPOs;
+	}
 
-    public void setSensorDataById(Collection<SensorDataPO> sensorDataById) {
-        this.sensorDataById = sensorDataById;
-    }
 }

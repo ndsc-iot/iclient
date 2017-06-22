@@ -1,5 +1,7 @@
 package com.yanxin.iot;
 
+import com.yanxin.iot.mqtt.CmdLineParser;
+import com.yanxin.iot.mqtt.MqttClientController;
 import com.yanxin.iot.property.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +13,17 @@ public class Main
 {
     private static Logger  log = LoggerFactory.getLogger(Main.class);
 
+
     public static void main( String[] args )
     {
-        String mariadb_host = PropertiesUtil.getStringByKey("mariadb_host");
-        log.info("读取到mariadb_host="+mariadb_host);
+
+        final CmdLineParser parser = new CmdLineParser(args);
+
+        parser.startController();
+
+        final MqttClientController client = parser.getClient();
+
+        //client.subscribe(topicName, qos);
+
     }
 }

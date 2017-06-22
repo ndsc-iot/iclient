@@ -27,7 +27,7 @@ public class ResourceLoader {
         if (prop != null) {
             return prop;
         }
-        String filePath = null;
+        String filePath;
         String configPath = System.getProperty("configurePath");
 
         if (configPath == null) {
