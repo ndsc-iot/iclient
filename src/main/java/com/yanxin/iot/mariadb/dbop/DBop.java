@@ -73,7 +73,7 @@ public class DBop {
         List<SiteareaPO> sites = session.createQuery("from SiteareaPO s").list();
         tx.commit();
         log.info("Query the sitearea lists from database table site area!");
-
+        
         return sites;
     }
 

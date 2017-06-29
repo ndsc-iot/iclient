@@ -16,6 +16,7 @@
 
 package com.yanxin.iot.mqtt;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.concurrent.*;
 
+import com.yanxin.iot.Utils.ConstantsUtil;
 import com.yanxin.iot.json.DevicePayload;
 import com.yanxin.iot.json.JsonParser;
 import com.yanxin.iot.mariadb.beans.SensorDataPO;
@@ -78,6 +80,23 @@ public class MqttClientController implements MqttCallback {
 
 	private ExecutorService cachedThreadPool;
 	private ScheduledExecutorService scheduler;
+
+	public ExecutorService getCachedThreadPool() {
+		return cachedThreadPool;
+	}
+
+	public void setCachedThreadPool(ExecutorService cachedThreadPool) {
+		this.cachedThreadPool = cachedThreadPool;
+	}
+	
+
+	public ScheduledExecutorService getScheduler() {
+		return scheduler;
+	}
+
+	public void setScheduler(ScheduledExecutorService scheduler) {
+		this.scheduler = scheduler;
+	}
 
 	/**
 	 * Constructs an instance of the sample client wrapper
@@ -174,8 +193,8 @@ public class MqttClientController implements MqttCallback {
 
     	// Connect to the MQTT server
 		log.info("[subscribe client] Connecting to "+brokerUrl + " with client ID "+client.getClientId());
-		this.connect();
-    	log.info("[subscribe client] Connected to "+brokerUrl+" with client ID "+client.getClientId());
+		client.connect(conOpt);
+    	log.info("[subscribe client] Connected!!");
 
     	// Subscribe to the requested topic
     	// The QoS specified is the maximum level that messages will be sent to the client at.
@@ -196,8 +215,18 @@ public class MqttClientController implements MqttCallback {
 		// Disconnect the client from the server
 
     }
+    
 
-    /**
+
+    public JsonParser getJsonParser() {
+		return jsonParser;
+	}
+
+	public void setJsonParser(JsonParser jsonParser) {
+		this.jsonParser = jsonParser;
+	}
+
+	/**
      * Utility method to handle logging. If 'quietMode' is set, this method does nothing
      * @param message the message to log
      */
@@ -250,6 +279,13 @@ public class MqttClientController implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) throws MqttException {
 		// Called when a message arrives from the server that matches any
 		// subscription made by the client
+		log.info("Receive a message from topic "+topic+" !");
+		String[] unpackTopic = null;
+
+		if(null != topic){
+			unpackTopic= topic.split("/");
+		}
+		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String time = format.format(new Date());
 
@@ -291,7 +327,7 @@ public class MqttClientController implements MqttCallback {
 
 		log.info("Time:\t" +time +
                            "  Topic:\t" + topic +
-                           "  Message:\t" + new String(message.getPayload()) +
+                           "  Message:\t" + devicePayload.toString() +
                            "  QoS:\t" + message.getQos());
 	}
 
@@ -341,7 +377,7 @@ public class MqttClientController implements MqttCallback {
 					}
 				}
 			}
-		}, 0 * 1000, 10 * 1000, TimeUnit.MILLISECONDS);
+		}, 0, 10 * 1000, TimeUnit.MILLISECONDS);
 	}
 
 	/****************************************************************/
@@ -382,7 +418,7 @@ public class MqttClientController implements MqttCallback {
     }
 
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 
 		// Default settings:
 		boolean quietMode 	= false;
@@ -497,5 +533,5 @@ public class MqttClientController implements MqttCallback {
 			System.out.println("excep "+me);
 			me.printStackTrace();
 		}
-	}
+	}*/
 }

@@ -47,4 +47,14 @@ public class PropertiesUtil {
             return null;
         }
     }
+    
+/*
+ * test configure file
+ *     public static void main( String[] args ){
+    	String str = PropertiesUtil.getStringByKey("mqtt_quietMode");
+    	
+    	if(null != str){
+    		log.info("get quietmode"+str);
+    	}
+    }*/
 }

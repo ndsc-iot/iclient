@@ -6,12 +6,10 @@ package com.yanxin.iot.json;
 public class DeviceData {
     private int type;
     private int value;
-    private String status;
 
-    public DeviceData(int type, int value, String status) {
+    public DeviceData(int type, int value) {
         this.type = type;
         this.value = value;
-        this.status = status;
     }
 
     public int getType() {
@@ -30,13 +28,6 @@ public class DeviceData {
         this.value = value;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     @Override
     public String toString() {
@@ -44,7 +35,6 @@ public class DeviceData {
 
         sb.append("type="+getType()+"\n");
         sb.append("value="+getValue()+"\n");
-        sb.append("status="+getStatus()+"\n");
 
         return sb.toString();
     }
