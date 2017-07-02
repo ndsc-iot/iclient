@@ -33,8 +33,8 @@ public class DeviceData {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("type="+getType()+"\n");
-        sb.append("value="+getValue()+"\n");
+        sb.append("(type="+getType()+" ");
+        sb.append("value="+getValue()+"),");
 
         return sb.toString();
     }

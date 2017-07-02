@@ -209,10 +209,12 @@ public class CmdLineParser {
 		// cleanSession, quietMode,userName,password);
 		// switchPubClient.publish(topic,qos,message.getBytes());
 
-		final String deviceId = "sasdfewaaasde2";
-		final int open = 1;
-		final String  topic = this.getPubTopic() + "/"+ deviceId;
+		final String deviceId = "Sf4416a4160817170f0416881";
+		// final int open = 1;
+		final String  topic = this.getPubTopic();  // + "/"+ deviceId;
 		int qos = this.getQos();
+		
+		
 		/*
 		 * ArrayList<DeviceData> data = new ArrayList<DeviceData>(); DeviceData
 		 * d = new DeviceData(6,open==1?2:1); data.add(d); SimpleDateFormat
@@ -221,21 +223,53 @@ public class CmdLineParser {
 		 * DevicePayload(deviceId, data, time);
 		 */
 		Runnable runnable = new Runnable() {
+			boolean open = true;
 			public void run() {
-				DevicePayload payload = Client.getJsonParser().getCommand(deviceId, 6, open==1?2:1);
+				DevicePayload payload = Client.getJsonParser().getCommand(deviceId, 6, open?0:1);
+				open = !this.open;
 				try {
-					Client.publish(topic, qos, Client.getJsonParser().getJsonData(payload));
+						Client.publish(topic, qos, Client.getJsonParser().getJsonData(payload));
 					log.info("Publish a new command to switch: "+payload.toString());
 				} catch (MqttException e) {
 					// TODO Auto-generated catch block
 					log.error("Errors happens when publishing time to sensors!");
 					e.printStackTrace();
 				}
+				
 			}
 		};
 
 		Client.getScheduler().scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
 	}
+	
+    public void startTimePublishControllerTest(){
+    	
+    	/*try {
+    		log.info("starting connections to MQTT broker:"+url);
+			timePubClient = new MqttClientController(url, clientIdTimePub, cleanSession, quietMode,userName,password);
+		} catch (MqttException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+
+       	Runnable runnable1 = new Runnable(){       		
+    		public void run(){
+    			TimePayload payload = new TimePayload(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+    			try {
+    				Client.publish(pubTimeTopic,qos,timePubClient.getJsonParser().getJsonTimeData(payload));
+					log.info("Publish a new time update to sensors: "+payload.toString());
+				} catch (MqttException e) {
+					// TODO Auto-generated catch block
+					log.error("Errors happens when publishing time to sensors!");
+					e.printStackTrace();
+				}
+    		}
+        };
+        //timePubClient.getScheduler().scheduleAtFixedRate(runnable, 0, 2, TimeUnit.HOURS);
+        Client.getScheduler().scheduleAtFixedRate(runnable1, 0, 10, TimeUnit.SECONDS);
+
+    }
+	
 
     public void startTimePublishController(){
 
@@ -244,13 +278,13 @@ public class CmdLineParser {
         try {
             // Create an instance of this class
         	timePubClient = new MqttClientController(url, clientIdTimePub, cleanSession, quietMode,userName,password);
-
+        	
         	Runnable runnable = new Runnable(){
         		public void run(){
         			TimePayload payload = new TimePayload(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         			try {
 						timePubClient.publish(pubTimeTopic,qos,timePubClient.getJsonParser().getJsonTimeData(payload));
-						log.info("Publish a new time update to sensors: "+payload.getTime());
+						log.info("Publish a new time update to sensors: "+payload.toString());
 					} catch (MqttException e) {
 						// TODO Auto-generated catch block
 						log.error("Errors happens when publishing time to sensors!");
@@ -259,7 +293,8 @@ public class CmdLineParser {
         		}
         	};
         	
-        	timePubClient.getScheduler().scheduleAtFixedRate(runnable, 0, 2, TimeUnit.HOURS);
+        	//timePubClient.getScheduler().scheduleAtFixedRate(runnable, 0, 2, TimeUnit.HOURS);
+        	timePubClient.getScheduler().scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
         	
             // Perform the requested action
         	//timePubClient.publish(pubTimeTopic,qos,message.getBytes());

@@ -80,6 +80,28 @@ public class MqttClientController implements MqttCallback {
 
 	private ExecutorService cachedThreadPool;
 	private ScheduledExecutorService scheduler;
+	
+	private ScheduledExecutorService cmdScheduler;
+	
+	private ScheduledExecutorService timeScheduler;
+	
+	
+
+	public ScheduledExecutorService getCmdScheduler() {
+		return cmdScheduler;
+	}
+
+	public void setCmdScheduler(ScheduledExecutorService cmdScheduler) {
+		this.cmdScheduler = cmdScheduler;
+	}
+
+	public ScheduledExecutorService getTimeScheduler() {
+		return timeScheduler;
+	}
+
+	public void setTimeScheduler(ScheduledExecutorService timeScheduler) {
+		this.timeScheduler = timeScheduler;
+	}
 
 	public ExecutorService getCachedThreadPool() {
 		return cachedThreadPool;
@@ -123,7 +145,9 @@ public class MqttClientController implements MqttCallback {
     	MqttDefaultFilePersistence dataStore = new MqttDefaultFilePersistence(tmpDir);
 
 		cachedThreadPool = Executors.newCachedThreadPool();
-		scheduler = Executors.newSingleThreadScheduledExecutor();
+		scheduler = Executors.newScheduledThreadPool(2); // newSingleThreadScheduledExecutor();
+		cmdScheduler = Executors.newSingleThreadScheduledExecutor();
+		timeScheduler = Executors.newSingleThreadScheduledExecutor();
 		try {
     		// Construct the connection options object that contains connection parameters
     		// such as cleanSession and LWT
@@ -159,9 +183,12 @@ public class MqttClientController implements MqttCallback {
     public void publish(String topicName, int qos, byte[] payload) throws MqttException {
 
     	// Connect to the MQTT server
+    	
     	log.info("[publish client] Connecting to "+brokerUrl + " with client ID "+client.getClientId());
-    	this.connect();
+    	this.connect2();
 		log.info("[publish client] Successfully Connected!!");
+		
+		this.connect();
 
     	String time = new Timestamp(System.currentTimeMillis()).toString();
     	log.info("[publish client] Publishing at: "+time+ " to topic \""+topicName+"\" qos "+qos);
@@ -173,11 +200,12 @@ public class MqttClientController implements MqttCallback {
     	// Send the message to the server, control is not returned until
     	// it has been delivered to the server meeting the specified
     	// quality of service.
-    	client.publish(topicName, message);
+    	
+		client.publish(topicName, message);
 
-    	// Disconnect the client
-    	client.disconnect();
-    	log.info("[publish client] Publishing client Disconnected");
+		// Disconnect the client
+		// client.disconnect();
+		// log.info("[publish client] Publishing client Disconnected");
     }
 
     /**
@@ -339,6 +367,31 @@ public class MqttClientController implements MqttCallback {
 		try {
 			if(null != conOpt){
 				this.startReconnect();
+			}else {
+				log.info("The client has not initialized yet!");
+				return;
+			}
+
+			//topic11 = client.getTopic(TOPIC);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	private void connect2() {
+
+		try {
+			if(null != conOpt){
+				try {
+					if (!client.isConnected()) {
+						client.connect(conOpt);
+					}
+				} catch (MqttSecurityException e) {
+					e.printStackTrace();
+				} catch (MqttException e) {
+					e.printStackTrace();
+				}
 			}else {
 				log.info("The client has not initialized yet!");
 				return;

@@ -9,14 +9,26 @@ package com.yanxin.iot.json;
  */
 public class TimePayload {
 	
+	private String deviceId = "fffffffffffffffffffffffff";
+	
 	private String time;
 
-	
-	
 	public TimePayload(String time) {
-		super();
 		this.time = time;
 	}
+	
+	
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+
+
 
 	public String getTime() {
 		return time;
@@ -24,6 +36,17 @@ public class TimePayload {
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+
+	@Override
+	public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("deviceId="+this.getDeviceId()+" ");
+        sb.append("time="+getTime()+"");
+
+        return sb.toString();
 	}
 	
 	

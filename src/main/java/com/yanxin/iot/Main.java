@@ -27,10 +27,13 @@ public class Main
         final CmdLineParser parser = new CmdLineParser(args);
 
         parser.startController();
-        //update time to sensors per 2 hours
-        parser.startTimePublishController();
         
         parser.startSwitchPublishControllerTest();
+        
+        //update time to sensors per 2 hours
+        
+        parser.startTimePublishController();
+        
 
         //final MqttClientController client = parser.getClient();
 
